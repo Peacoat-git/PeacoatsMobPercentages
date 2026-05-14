@@ -1,0 +1,21 @@
+# WoW SavedVariables (generated at runtime, not source)
+*.bak
+
+# OS clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Build artifacts
+*.zip
+dist/
+
+# Luacheck
+.luacheckrc

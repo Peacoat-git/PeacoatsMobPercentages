@@ -296,10 +296,11 @@ local function registerSlash()
         msg = (msg or ""):lower():match("^%s*(.-)%s*$")
 
         if msg == "" then
-            -- Use the stored category object, NOT the string name, to avoid the
-            -- "outside of expected range" Lua error from OpenSettingsPanel.
+            -- OpenToCategory requires the numeric category ID, not the table itself.
+            -- The category table returned by RegisterCanvasLayoutCategory contains an
+            -- 'ID' field which is the integer C_SettingsUtil.OpenSettingsPanel expects.
             if settingsCategory then
-                Settings.OpenToCategory(settingsCategory)
+                Settings.OpenToCategory(settingsCategory:GetID())
             end
         elseif msg == "enable" then
             cfg().enabled = true
