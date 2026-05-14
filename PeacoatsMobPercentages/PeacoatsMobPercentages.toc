@@ -1,0 +1,10 @@
+## Interface: 120005
+## Title: Peacoat's Mob Percentages
+## Notes: Shows forces (trash) % on NPC tooltips inside supported Mythic+ dungeons. /pmp for options.
+## Author: Peacoat
+## Version: 1.2.0
+## IconTexture: Interface\AddOns\PeacoatsMobPercentages\Media\icon
+## SavedVariables: PeacoatsMobPctDB
+
+PeacoatsMobPercentages.lua
+Data.lua
