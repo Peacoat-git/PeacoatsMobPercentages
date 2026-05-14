@@ -40,8 +40,8 @@ end
 -- ── NPC ID extraction ─────────────────────────────────────────────────────────
 
 local function getNPCID(unit)
-    local guid = UnitGUID(unit)
-    if not guid then return nil end
+    local ok, guid = pcall(UnitGUID, unit)
+    if not ok or not guid then return nil end
     -- GUID format: "Creature-0-REALM-SERVER-ZONE-NPCID-SPAWNUID"
     local npcID = tonumber(select(6, strsplit("-", guid)))
     return npcID
@@ -128,7 +128,15 @@ local function OnTooltipSetUnit(tooltip)
 
     local _, unit = tooltip:GetUnit()
     if not unit then return end
-    if not UnitExists(unit) or UnitIsPlayer(unit) then return end
+
+    -- Wrap all Unit* calls in pcall. World-cursor tooltips (ground objects, quest items,
+    -- etc.) can return a secret/tainted unit token that is non-nil but throws
+    -- "Secret values only allowed during untainted execution" when passed to Unit* APIs.
+    local ok, isPlayer = pcall(UnitIsPlayer, unit)
+    if not ok or isPlayer then return end
+
+    local ok2, exists = pcall(UnitExists, unit)
+    if not ok2 or not exists then return end
 
     local npcID = getNPCID(unit)
     if not npcID then return end
